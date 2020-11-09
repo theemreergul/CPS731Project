@@ -31,7 +31,9 @@
         android:id="@+id/swNotifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Notifications" />
+        android:text="Show Notifications"
+        android:textOff="OFF"
+        android:textOn="ON" />
 
     <TextView
         android:id="@+id/txtShowNotifications"
