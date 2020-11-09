@@ -56,7 +56,8 @@
     <Spinner
         android:id="@+id/spnCountry"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:entries="@array/countries" />
 
     <EditText
         android:id="@+id/edtPhone"

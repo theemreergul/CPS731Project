@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CPS731Project</string>
+    <array name="countries">
+        <item>Canada</item>
+        <item>United States</item>
+    </array>
 </resources>
