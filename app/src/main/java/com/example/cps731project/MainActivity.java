@@ -2,6 +2,7 @@ package com.example.cps731project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    private RestaurantViewModel mRestaurantViewModel;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String rtID="";
     public static final String rtName_Key="RestaurantName";
@@ -39,8 +43,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btnSettings = findViewById(R.id.btngoToSettings);
-        Button btnAddRestaurant = findViewById(R.id.btnAddRestaurant);
+        Button btnShowRestaurants = findViewById(R.id.btnListRestaurants);
+        //Button btnAddRestaurant = findViewById(R.id.btnAddRestaurant);
         btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,
+            Settings.class);
+                startActivity(intent);
+            }
+        });
+        btnShowRestaurants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,
@@ -48,63 +61,89 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        btnAddRestaurant.setOnClickListener(new View.OnClickListener() {
+        mRestaurantViewModel = ViewModelProviders.of(this).get(RestaurantViewModel.class);
+        // Floating action button setup
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                TextView rtName=findViewById(R.id.edtRestaurantName);
-                TextView rtEmail=findViewById(R.id.edtEmail);
-                TextView rtWeb=findViewById(R.id.edtWebsite);
-                TextView adPhone=findViewById(R.id.edtPhone);
-                TextView adStreet=findViewById(R.id.edtStreet);
-                TextView adCity=findViewById(R.id.edtCity);
-                TextView adProvince=findViewById(R.id.edtProvince);
-                TextView adPostalCode=findViewById(R.id.edtPostalCode);
-                Spinner adCountry=findViewById(R.id.spnCountry);
-
-                Map<String,Object> restaurant=new HashMap<>();
-
-                restaurant.put(rtName_Key,rtName.getText().toString());
-                restaurant.put(rtEmail_Key, rtEmail.getText().toString());
-                restaurant.put(rtWeb_Key, rtWeb.getText().toString());
-                final Map<String,Object> address=new HashMap<>();
-                address.put(adPhone_Key,adPhone.getText().toString());
-                address.put(adStreet_Key,adStreet.getText().toString());
-                address.put(adCity_Key,adCity.getText().toString());
-                address.put(adProvince_Key,adProvince.getText().toString());
-                address.put(adPostalCode_Key,adPostalCode.getText().toString());
-                address.put(adCountry_Key,adCountry.getSelectedItem().toString());
-                db.collection("restaurants").add(restaurant).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        rtID=documentReference.getId();
-                        address.put(adRTID,rtID);
-                        db.collection("AddressDetails").add(address).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                displayToast("Restaurant successfully created");
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                displayToast("Restaurant creation failed");
-                            }
-                        });
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        displayToast("Restaurant creation failed");
-                    }
-                });
-
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddRestaurantActivity.class);
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
+
+//        btnAddRestaurant.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TextView rtName=findViewById(R.id.edtRestaurantName);
+//                TextView rtEmail=findViewById(R.id.edtEmail);
+//                TextView rtWeb=findViewById(R.id.edtWebsite);
+//                TextView adPhone=findViewById(R.id.edtPhone);
+//                TextView adStreet=findViewById(R.id.edtStreet);
+//                TextView adCity=findViewById(R.id.edtCity);
+//                TextView adProvince=findViewById(R.id.edtProvince);
+//                TextView adPostalCode=findViewById(R.id.edtPostalCode);
+//                Spinner adCountry=findViewById(R.id.spnCountry);
+//
+//                Map<String,Object> restaurant=new HashMap<>();
+//
+//                restaurant.put(rtName_Key,rtName.getText().toString());
+//                restaurant.put(rtEmail_Key, rtEmail.getText().toString());
+//                restaurant.put(rtWeb_Key, rtWeb.getText().toString());
+//                final Map<String,Object> address=new HashMap<>();
+//                address.put(adPhone_Key,adPhone.getText().toString());
+//                address.put(adStreet_Key,adStreet.getText().toString());
+//                address.put(adCity_Key,adCity.getText().toString());
+//                address.put(adProvince_Key,adProvince.getText().toString());
+//                address.put(adPostalCode_Key,adPostalCode.getText().toString());
+//                address.put(adCountry_Key,adCountry.getSelectedItem().toString());
+//                db.collection("restaurants").add(restaurant).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        rtID=documentReference.getId();
+//                        address.put(adRTID,rtID);
+//                        db.collection("AddressDetails").add(address).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                            @Override
+//                            public void onSuccess(DocumentReference documentReference) {
+//                                displayToast("Restaurant successfully created");
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                displayToast("Restaurant creation failed");
+//                            }
+//                        });
+//
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        displayToast("Restaurant creation failed");
+//                    }
+//                });
+//
+//            }
+//        });
     }
 
     public void displayToast(String message) {
         Toast.makeText(getApplicationContext(), message,
                 Toast.LENGTH_SHORT).show();
     }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            String[] rData=data.getStringArrayExtra(AddRestaurantActivity.EXTRA_REPLY);
+            Restaurant resto =new Restaurant(rData[0],rData[1],rData[2],rData[3],rData[4],"");
+            mRestaurantViewModel.insert(resto);
+        } else {
+            Log.d("result",String.format("%s",resultCode));
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.empty_not_saved,
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
 }
