@@ -2,6 +2,7 @@ package com.example.cps731project;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -15,7 +16,7 @@ public class RestaurantRepository {
         mRestaurantDao = db.restaurantDao();
         mAllRestaurants = mRestaurantDao.getAllRestaurants();
     }
-    LiveData<List<Restaurant>> getAllWords() {
+    LiveData<List<Restaurant>> getAllRestaurants() {
         return mAllRestaurants;
     }
     public void insert(Restaurant restaurant) {
@@ -30,11 +31,13 @@ public class RestaurantRepository {
 
         insertAsyncTask(RestaurantDao dao) {
             mAsyncTaskDao = dao;
+
         }
 
         @Override
         protected Void doInBackground(final Restaurant... params) {
             mAsyncTaskDao.insert(params[0]);
+            Log.d("rData","ekledim");
             return null;
         }
     }

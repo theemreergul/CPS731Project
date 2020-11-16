@@ -24,7 +24,7 @@ public class ListRestaurantsAdapter extends RecyclerView.Adapter<ListRestaurants
     public void onBindViewHolder(ListRestaurantViewHolder holder, int position) {
         if (mRestaurants != null) {
             Restaurant current = mRestaurants.get(position);
-            holder.restaurantItemView.setText(current.getName());
+            holder.restaurantItemView.setText(current.getName() + mRestaurants.size());
         } else {
             // Covers the case of data not being ready yet.
             holder.restaurantItemView.setText("No Word");

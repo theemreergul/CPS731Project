@@ -57,7 +57,7 @@ public class AddRestaurantActivity extends AppCompatActivity {
                 String rPhone = mPhone.getText().toString();
                 String rEmail = mEmail.getText().toString();
                 String rWebsite = mWebsite.getText().toString();
-                String[] rData={rName,rAddress,rPhone,rEmail,rWebsite};
+                String[] rData={"restaurant",rName,rAddress,rPhone,rEmail,rWebsite};
                 Log.d("rdata",String.format("%s",rData.length));
                 replyIntent.putExtra(EXTRA_REPLY, rData);
 

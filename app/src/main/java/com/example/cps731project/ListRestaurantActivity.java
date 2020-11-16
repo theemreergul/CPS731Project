@@ -25,7 +25,7 @@ public class ListRestaurantActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRestaurantViewModel = ViewModelProviders.of(this).get(RestaurantViewModel.class);
 
-        mRestaurantViewModel.getmAllRestaurants().observe(this, new Observer<List<Restaurant>>() {
+        mRestaurantViewModel.getAllRestaurants().observe(this, new Observer<List<Restaurant>>() {
             @Override
             public void onChanged(@Nullable final List<Restaurant> restaurants) {
                 // Update the cached copy of the words in the adapter.

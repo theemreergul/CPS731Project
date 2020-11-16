@@ -17,6 +17,18 @@
     <string name="website">Website</string>
     <string name="list_restaurants">List Restaurants</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="email">Email</string>
+    <string name="last_name">Last Name</string>
+    <string name="u_last_name">Last Name</string>
+    <string name="u_first_name">First Name</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="first_name">First Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="waiter">Waiter</string>
+    <string name="customer">Customer</string>
     <array name="countries">
         <item>Canada</item>
         <item>United States</item>

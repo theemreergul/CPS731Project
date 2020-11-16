@@ -24,8 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    public static final int NEW_RESTAURANT_ACTIVITY_REQUEST_CODE = 1;
     private RestaurantViewModel mRestaurantViewModel;
+    private UserViewModel mUserViewModel;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String rtID="";
     public static final String rtName_Key="RestaurantName";
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button btnSettings = findViewById(R.id.btngoToSettings);
         Button btnShowRestaurants = findViewById(R.id.btnListRestaurants);
-        //Button btnAddRestaurant = findViewById(R.id.btnAddRestaurant);
+        Button btnNewAccount = findViewById(R.id.btnNewAccount);
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,14 +62,23 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnNewAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,
+                        NewAccountActivity.class);
+                startActivityForResult(intent, NEW_RESTAURANT_ACTIVITY_REQUEST_CODE);
+            }
+        });
         mRestaurantViewModel = ViewModelProviders.of(this).get(RestaurantViewModel.class);
+        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         // Floating action button setup
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddRestaurantActivity.class);
-                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+                startActivityForResult(intent, NEW_RESTAURANT_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -133,10 +143,24 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == NEW_RESTAURANT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+
             String[] rData=data.getStringArrayExtra(AddRestaurantActivity.EXTRA_REPLY);
-            Restaurant resto =new Restaurant(rData[0],rData[1],rData[2],rData[3],rData[4],"");
-            mRestaurantViewModel.insert(resto);
+
+            Log.d("rData",rData[0] + rData.length);
+            if(rData[0].equals("restaurant")) {
+                Log.d("rData",rData[0] + rData.length);
+                Restaurant resto = new Restaurant(rData[1], rData[2], rData[3], rData[4], rData[5], "");
+                mRestaurantViewModel.insert(resto);
+
+            }
+            else if(rData[0].equals("user")){
+
+                Log.d("rData",rData[0] + rData.length);
+                User usr = new User(rData[1], rData[2], rData[3], rData[4], rData[5], rData[6],rData[7],"");
+                mUserViewModel.insert(usr);
+            }
+
         } else {
             Log.d("result",String.format("%s",resultCode));
             Toast.makeText(

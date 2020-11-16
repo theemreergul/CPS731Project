@@ -13,9 +13,9 @@ public class RestaurantViewModel extends AndroidViewModel {
     public  RestaurantViewModel(Application application){
         super(application);
         mRepository = new RestaurantRepository(application);
-        mAllRestaurants = mRepository.getAllWords();
+        mAllRestaurants = mRepository.getAllRestaurants();
     }
-    LiveData<List<Restaurant>> getmAllRestaurants() { return mAllRestaurants; }
+    LiveData<List<Restaurant>> getAllRestaurants() { return mAllRestaurants; }
     public void insert(Restaurant restaurant) { mRepository.insert(restaurant); }
 
 }
