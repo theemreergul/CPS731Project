@@ -11,21 +11,22 @@
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings" />
+        android:text="@string/settings" />
 
     <TextView
         android:id="@+id/txtDisplayName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Display Name" />
+        android:text="@string/display_name" />
 
     <EditText
         android:id="@+id/edtDisplayName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Ex. John Smith"
-        android:inputType="textPersonName" />
+        android:hint="@string/ex_john_smith"
+        android:inputType="textPersonName"
+        android:autofillHints="" />
 
     <Switch
         android:id="@+id/swNotifications"
@@ -44,6 +45,6 @@
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Preferences" />
+        android:text="@string/save_preferences" />
 
 </LinearLayout>

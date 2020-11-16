@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">CPS731Project</string>
+    <string name="settings">Settings</string>
+    <string name="display_name">Display Name</string>
+    <string name="ex_john_smith">Ex. John Smith</string>
+    <string name="save_preferences">Save Preferences</string>
+    <string name="textview">TextView</string>
     <array name="countries">
         <item>Canada</item>
         <item>United States</item>
